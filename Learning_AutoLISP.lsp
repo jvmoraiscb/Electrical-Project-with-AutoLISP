@@ -1,0 +1,23 @@
+(defun c:if()
+  (setq numA (getint "\nnum A: "))
+  (setq numB (getint "\nnum B: "))
+  (if (> numA numB)
+    (progn
+      (prompt "A is greater than B")
+    )
+    (progn
+      (prompt "B is greater than A")
+    )
+  )
+  (princ)
+)
+
+(defun c:while()
+  (setq num (getint "\na number: "))
+  (setq i 0)
+  (while (< i num)
+    (prompt "ok!\n")
+    (setq i (+ i 1))
+  )
+  (princ)
+)

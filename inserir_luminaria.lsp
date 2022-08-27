@@ -2,6 +2,7 @@
   (guarda_variaveis)
 
   (ins_pt)
+  (verificar_layer "luminarias" "1")
   (proc_ins ins_lum) ; as funcoes criam variaveis globais
   
   (restaura_variaveis)
@@ -38,10 +39,10 @@
   (command "._line" pt_cent pt1 "")
   (command "._line" pt_cent pt2 "")
   (command "._line" pt_cent pt3 "")
-  (command "style" "texto_luminaria" "simplex" (/ diametro 3) "1" "0" "no" "no" "no")
+  (command "style" "texto_luminaria" "simplex" (/ diametro 4) "1" "0" "no" "no" "no")
   (command "._text" "j" "mc" pt_c 0 txt_c "")
   (command "._text" "j" "mc" pt_s 0 txt_s "")
-  (command "style" "texto_luminaria2" "simplex" (/ diametro 4) "1" "0" "no" "no" "no")
+  (command "style" "texto_luminaria2" "simplex" (/ diametro 5) "1" "0" "no" "no" "no")
   (command "._text" "j" "mc" pt_p 0 txt_p "")
 )
 
@@ -53,4 +54,26 @@
 
   (setvar "osmode" 0)
   (setq ins_lum (polar pt1_ins_lum ang_pt1_pt2_ins_lum dis_pt1_pt2_ins_lum ))
+)
+
+(defun verificar_layer(nome cor)
+  (setq layer(tblsearch "layer" nome))
+  (if (= layer nil)
+    (progn
+      (command "layer" "n" nome "c" cor nome "")
+      (setvar "clayer" nome)
+    )
+    (progn
+      (setq desligado (cdr (assoc 62 layer)))
+      (if (> desligado 0)
+        (progn
+          (setvar "clayer" nome)
+        )
+        (progn
+          (command "layer" "on" nome "")
+          (setvar "clayer" nome)
+        )
+      )
+    )
+  )
 )
